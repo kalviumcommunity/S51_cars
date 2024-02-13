@@ -1,0 +1,12 @@
+{
+  "name": "s51_cars",
+  "version": "1.0.0",
+  "description": "this webpage gives the information about the buying of cars and gives the new modals.\r Explore a diverse range of EV models from leading manufacturers, each designed to redefine driving experiences while minimizing environmental impact. From sleek electric sedans to rugged electric SUVs, our webpage features a comprehensive collection of EVs tailored to suit every lifestyle and preference.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
