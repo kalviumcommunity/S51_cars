@@ -1,9 +1,12 @@
-
+const{ getRouter, postRouter, deleteRouter, putRouter } = require('./Routers/routers.js')
+const bodyParser=require('body-parser')
 var express = require("express");
+
 
 var mongoose = require("mongoose");
 const {connectdb, isConnected} = require('./dbconnected.js');
 var app = express();
+app.use(bodyParser.json())
 
  app.get("/ping", (req, res) => {
     res.send("pong");
@@ -21,3 +24,8 @@ app.listen(3000,async() => {
     await connectdb();
     console.log("Server is running on port 3000");
 });
+
+app.use('/',getRouter);
+app.use('/',postRouter);
+app.use('/',deleteRouter);
+app.use('/',putRouter);
