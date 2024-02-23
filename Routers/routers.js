@@ -31,34 +31,50 @@ getRouter.get('/getev/:id', async (req, res) => {
 
 postRouter.post('/addev', async (req, res) => {
     try {
-        const newEv = await Ev.create(req.body);
+        const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity}=req.body;
+        const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity});
         res.status(201).json(newEv);
     } catch(err) {
-        console.log(err);
+        console.log(err.message);
         return res.status(500).send({
             message: "Internal server error"
         });
     }
 });
 
-putRouter.put('/updateev/:id', async (req, res) => {
+putRouter.patch('/updateuser/:id', async (req, res) => {
     try {
-        const updatedEv = await Ev.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).json(updatedEv);
-    } catch(err) {
-        console.log(err);
+        const userId = req.params.id;
+        const updateFields = req.body;
+
+        const existingUser = await Ev.findOne({id: userId });
+
+        if (!existingUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const updatedUser = await Ev.findOneAndUpdate(
+            { id: userId },
+            { $set: updateFields },
+            { new: true }
+        );
+
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        console.error(err);
         return res.status(500).send({
             message: "Internal server error"
         });
     }
 });
 
-deleteRouter.delete('/deleteev/:id', async (req, res) => {
+deleteRouter.delete('/deleteuser/:id', async (req, res) => {
     try {
-        const deletedEv = await Ev.findByIdAndDelete(req.params.id);
-        res.status(200).json(deletedEv);
-    } catch(err) {
-        console.log(err);
+        const userId = req.params.id;
+        const deletedUser = await Ev.findOneAndDelete({userId});
+        res.status(200).json("deleted user");
+    } catch (err) {
+        console.error(err);
         return res.status(500).send({
             message: "Internal server error"
         });
