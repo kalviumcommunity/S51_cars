@@ -10,3 +10,8 @@ Explore a diverse range of EV models from leading manufacturers, each designed t
 
 ##deployment link 
 https://cars-5ep7.onrender.com/ping
+
+
+##Working Frontend Link
+https://ev-cars.netlify.app/
+
