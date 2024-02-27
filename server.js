@@ -1,13 +1,13 @@
 const{ getRouter, postRouter, deleteRouter, putRouter } = require('./Routers/routers.js')
 const bodyParser=require('body-parser')
 var express = require("express");
-
+const cors = require("cors")
 
 var mongoose = require("mongoose");
 const {connectdb, isConnected} = require('./dbconnected.js');
 var app = express();
 app.use(bodyParser.json())
-
+app.use(cors())
  app.get("/ping", (req, res) => {
     res.send("pong");
 });
