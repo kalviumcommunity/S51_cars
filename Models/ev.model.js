@@ -8,7 +8,7 @@ const evSchema = new mongoose.Schema({
     bodytype: { type: String },
     range: { type: String },
     chargingtime: { type: String },
-    safetyfeatures: { typee: String },
+    safetyfeatures: { type: String },
     batterycapacity: { type: String }
 }, {
     timestamps: true
