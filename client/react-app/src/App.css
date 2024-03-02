@@ -31,3 +31,13 @@
 .carContainer h1:first-child {
   margin-top: 0; /* Remove top margin for the first heading */
 }
+
+.box{
+  height: 400px;
+  width: 500px;
+}
+
+h1{
+  display: flex;
+  justify-content: center;
+}
