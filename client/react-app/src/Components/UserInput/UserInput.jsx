@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import "./UserInput.css";
+import "./UserInput.css";
 
 const UserInput = () => {
   const [formData, setFormData] = useState({
+    id: 0,
     Name: "", 
     Price: "", 
     model: "", 
@@ -44,6 +45,13 @@ const UserInput = () => {
   return (
     <form onSubmit={handleSubmit} className="input-form">
       <div className="input">
+
+      <label>
+          id:
+          <input type="number" name="id" value={formData.id} onChange={handleChange} />
+        </label>
+        <br />
+
         <label>
           Name:
           <input type="text" name="Name" value={formData.Name} onChange={handleChange} />

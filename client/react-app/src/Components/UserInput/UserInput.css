@@ -1,47 +1,55 @@
-/* UserInput.css */
-
-
-.input-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
   
-  .input-form label {
+  .input-form {
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+  }
+  
+  .input {
+    margin-bottom: 20px;
+  }
+  
+  .input label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    color: #333;
     font-weight: bold;
   }
   
-  .input-form input[type="text"] {
-    width: calc(100% - 22px);
+  .input input {
+    width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
   }
   
-  .input-form button[type="submit"] {
+  .input input:focus {
+    border-color: #6c5ce7;
+  }
+  
+  .input button {
     width: 100%;
-    background-color: #4caf50;
+    padding: 12px;
+    background-color: #6c5ce7;
     color: white;
-    padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
     transition: background-color 0.3s ease;
   }
   
-  .input-form button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
-  .input-form button[type="submit"]:focus {
-    outline: none;
+  .input button:hover {
+    background-color: #4834d4;
   }
   

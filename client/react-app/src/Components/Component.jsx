@@ -30,6 +30,24 @@ function component() {
       console.error(err);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+        const response = await fetch(`https://cars-5ep7.onrender.com/deleteuser/${id}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            const updatedData = data.filter(item => item.FoodID !== id);
+            setData(updatedData);
+            console.log('Food item deleted successfully');
+        } else {
+            console.error('Failed to delete food item');
+        }
+    } catch (error) {
+        console.error('Error deleting food item:', error);
+    }
+};
+
   return (
     <div>
              <h1> Ev cars </h1>
@@ -46,7 +64,8 @@ function component() {
               <h1>Chargingtime:{item.chargingtime}</h1>
               <h1>Safetyfeatures:{item.safetyfeatures}</h1>
               <h1>Batterycapacity:{item.batterycapacity}</h1>
-              
+              <Link to={`/update/${item._id}`}><button>Update</button></Link>
+              <button onClick={(e)=> handleDelete(item._id)}>Delete</button>
             </div>
           })
         }
