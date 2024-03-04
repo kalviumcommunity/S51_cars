@@ -47,14 +47,14 @@ putRouter.patch('/updateuser/:id', async (req, res) => {
         const userId = req.params.id;
         const updateFields = req.body;
 
-        const existingUser = await Ev.findOne({id: userId });
+        const existingUser = await Ev.findOne({_id: userId });
 
         if (!existingUser) {
             return res.status(404).json({ message: 'User not found' });
         }
 
         const updatedUser = await Ev.findOneAndUpdate(
-            { id: userId },
+            { _id: userId },
             { $set: updateFields },
             { new: true }
         );
@@ -71,7 +71,7 @@ putRouter.patch('/updateuser/:id', async (req, res) => {
 deleteRouter.delete('/deleteuser/:id', async (req, res) => {
     try {
         const userId = req.params.id;
-        const deletedUser = await Ev.findOneAndDelete({userId});
+        const deletedUser = await Ev.findOneAndDelete({_id: userId});
         res.status(200).json("deleted user");
     } catch (err) {
         console.error(err);
