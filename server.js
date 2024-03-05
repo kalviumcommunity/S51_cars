@@ -5,6 +5,7 @@ const cors = require("cors")
 app.use(cookieParser());
 const cookieParser = require('cookie-parser');
 
+
 var mongoose = require("mongoose");
 const {connectdb, isConnected} = require('./dbconnected.js');
 var app = express();
@@ -37,6 +38,17 @@ app.get('/logout', (req, res) => {
     res.clearCookie('username');
     res.send('Logout successful');
 });
+// auth endpoint
+const jwt = require('jsonwebtoken');
+app.post('/auth', (req, res) => {
+    const { username, password } = req.body;
+    // Generate JWT token
+    const token = jwt.sign({ username: username },process.env.ACCESS_TOKEN);
+    res.send({ token });
+    res.cookie('token', token);
+
+});
+
 
 app.use('/',getRouter);
 app.use('/',postRouter);
