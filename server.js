@@ -2,8 +2,8 @@ const{ getRouter, postRouter, deleteRouter, putRouter } = require('./Routers/rou
 const bodyParser=require('body-parser')
 var express = require("express");
 const cors = require("cors")
-app.use(cookieParser());
-const cookieParser = require('cookie-parser');
+// app.use(cookieParser());
+// const cookieParser = require('cookie-parser');
 
 var mongoose = require("mongoose");
 const {connectdb, isConnected} = require('./dbconnected.js');
@@ -22,21 +22,21 @@ app.get("/", (req, res) => {
     res.send("Hello guys");
 });
 
-app.listen(3000,async() => {
+app.listen(3001,async() => {
     await connectdb();
     console.log("Server is running on port 3000");
 });
-app.post('/login', (req, res) => {
-    const { username } = req.body;
-    res.cookie('username', username);
-    res.send('Login successful');
-});
+// app.post('/login', (req, res) => {
+//     const { username } = req.body;
+//     res.cookie('username', username);
+//     res.send('Login successful');
+// });
 
-// Logout endpoint
-app.get('/logout', (req, res) => {
-    res.clearCookie('username');
-    res.send('Logout successful');
-});
+// // Logout endpoint
+// app.get('/logout', (req, res) => {
+//     res.clearCookie('username');
+//     res.send('Logout successful');
+// });
 
 app.use('/',getRouter);
 app.use('/',postRouter);
