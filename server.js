@@ -46,7 +46,6 @@ app.post('/auth', (req, res) => {
     const token = jwt.sign({ username: username },process.env.ACCESS_TOKEN);
     res.send({ token });
     res.cookie('token', token);
-
 });
 
 

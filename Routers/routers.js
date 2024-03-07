@@ -37,8 +37,8 @@ postRouter.post('/addev', async (req, res) => {
             return res.status(400).json(error.details)
         }
         else{
-            const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity}=req.body;
-            const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity});
+            const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity,createdby}=req.body;
+            const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity,createdby});
             res.status(201).json(newEv);
         }
     } catch(err) {
