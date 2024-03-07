@@ -4,6 +4,7 @@ const postRouter = express.Router();
 const putRouter = express.Router();
 const deleteRouter = express.Router();
 const Ev = require("../Models/ev.model");
+const updateAndPostJoi=require("../validator")
 
 getRouter.get('/getallev', async (req, res) => {
     try {
@@ -31,9 +32,15 @@ getRouter.get('/getev/:id', async (req, res) => {
 
 postRouter.post('/addev', async (req, res) => {
     try {
-        const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity}=req.body;
-        const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity});
-        res.status(201).json(newEv);
+        const{error, value} = updateAndPostJoi(req.body)
+        if(error){
+            return res.status(400).json(error.details)
+        }
+        else{
+            const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity,createdby}=req.body;
+            const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity,createdby});
+            res.status(201).json(newEv);
+        }
     } catch(err) {
         console.log(err.message);
         return res.status(500).send({
@@ -44,15 +51,18 @@ postRouter.post('/addev', async (req, res) => {
 
 putRouter.patch('/updateuser/:id', async (req, res) => {
     try {
-        const userId = req.params.id;
-        const updateFields = req.body;
-
-        const existingUser = await Ev.findOne({_id: userId });
-
-        if (!existingUser) {
-            return res.status(404).json({ message: 'User not found' });
+        const {error, value} = updateAndPostJoi(req.body)
+        if(error){
+            return res.status(400).json(error.details)
         }
-
+        else{
+            const userId = req.params.id;
+            const updateFields = req.body;
+            const existingUser = await Ev.findOne({_id: userId });
+            if (!existingUser){ 
+                return res.status(404).json({ message: 'User not found' });
+            }
+            
         const updatedUser = await Ev.findOneAndUpdate(
             { _id: userId },
             { $set: updateFields },
@@ -60,6 +70,11 @@ putRouter.patch('/updateuser/:id', async (req, res) => {
         );
 
         res.status(200).json(updatedUser);
+            }
+
+
+        
+
     } catch (err) {
         console.error(err);
         return res.status(500).send({
