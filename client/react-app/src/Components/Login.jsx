@@ -21,7 +21,7 @@ function Login() {
         e.preventDefault();
         try {
             const header = new Headers({"Access-Control-Allow-Origin":"*", 'Content-Type' : '*'})
-            const response = await axios.post('http://localhost:3000/login',{
+            const response = await axios.post('http://localhost:3001/login',{
                 headers: header,
                 'mode' : "no-cors",
                 username,

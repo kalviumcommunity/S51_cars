@@ -110,7 +110,7 @@ postRouter.post("/login", async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
-        const token = jwt.sign({ username: user.username }, process.env.ACCESS_TOKEN);
+        const token = jwt.sign({ username: user.username }, process.env.access_taken);
         res.cookie('token', token, { httpOnly: true });
         console.log("token", token, user.username)
         res.json({ token, username: user.username });
