@@ -5,14 +5,32 @@ function Component() {
   const [data, setData] = useState(null);
   const [creators, setCreators] = useState([]);
   const [selectedCreator, setSelectedCreator] = useState('');
+  const [isLoggedIn,setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     fetchData();
+    checkLoginStatus();
   }, []);
 
   useEffect(() => {
     extractCreators();
   }, [data]);
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+};
+
+  const checkLoginStatus = () => {
+    const token = getCookie('token');
+    setIsLoggedIn(!!token);
+};
+const handleLogout = () => {
+  document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  setIsLoggedIn(false);
+  window.location.reload();
+};
 
   const fetchData = async () => {
     const apiLink = "https://cars-5ep7.onrender.com/getallev";
@@ -59,6 +77,11 @@ function Component() {
     <div>
       <h1>Ev cars</h1>
       <Link to='/add'><button>ADD</button></Link>
+      {isLoggedIn ? (
+                    <button className="logout" onClick={handleLogout}>LOGOUT</button>
+                ) : (
+                    <Link to='/login'><button className="login">LOGIN</button></Link>
+                )}
       <div>
         <label htmlFor="creator">Filter by Creator:</label>
         <select id="creator" value={selectedCreator} onChange={handleCreatorChange}>
