@@ -76,7 +76,8 @@ const handleLogout = () => {
   return (
     <div>
       <h1>Ev cars</h1>
-      <Link to='/add'><button>ADD</button></Link>
+      {isLoggedIn && <Link to='/add'><button>ADD</button></Link>}
+
       {isLoggedIn ? (
                     <button className="logout" onClick={handleLogout}>LOGOUT</button>
                 ) : (
@@ -104,8 +105,9 @@ const handleLogout = () => {
               <h1>Safetyfeatures:{Array.isArray(item.safetyfeatures) ? item.safetyfeatures.join(', ') : 'N/A'}</h1>
               <h1>Batterycapacity:{item.batterycapacity}</h1>
               <h1>Creator:{item.createdby}</h1>
-              <Link to={`/update/${item._id}`}><button>Update</button></Link>
-              <button onClick={(e) => handleDelete(item._id)}>Delete</button>
+              {isLoggedIn && <Link to={`/update/${item._id}`}><button>Update</button></Link>}
+              {isLoggedIn && <button onClick={(e) => handleDelete(item._id)}>Delete</button>}
+
             </div>
           ))}
       </div>

@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 
 app.listen(3001,async() => {
     await connectdb();
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 3001");
 });
 app.post('/login', (req, res) => {
     const { username } = req.body;
