@@ -2,12 +2,13 @@ const{ getRouter, postRouter, deleteRouter, putRouter } = require('./Routers/rou
 const bodyParser=require('body-parser')
 var express = require("express");
 const cors = require("cors")
-app.use(cookieParser());
 const cookieParser = require('cookie-parser');
+
 
 var mongoose = require("mongoose");
 const {connectdb, isConnected} = require('./dbconnected.js');
 var app = express();
+app.use(cookieParser());
 app.use(bodyParser.json())
 app.use(cors())
  app.get("/ping", (req, res) => {
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
 
 app.listen(3001,async() => {
     await connectdb();
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 3001");
 });
 app.post('/login', (req, res) => {
     const { username } = req.body;
@@ -37,6 +38,16 @@ app.get('/logout', (req, res) => {
     res.clearCookie('username');
     res.send('Logout successful');
 });
+// auth endpoint
+const jwt = require('jsonwebtoken');
+app.post('/auth', (req, res) => {
+    const { username, password } = req.body;
+    // Generate JWT token
+    const token = jwt.sign({ username: username },process.env.ACCESS_TOKEN);
+    res.send({ token });
+    res.cookie('token', token);
+});
+
 
 app.use('/',getRouter);
 app.use('/',postRouter);

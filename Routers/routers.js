@@ -5,7 +5,8 @@ const putRouter = express.Router();
 const deleteRouter = express.Router();
 const Ev = require("../Models/ev.model");
 const updateAndPostJoi=require("../validator")
-
+const User= require("../Models/User.model")
+const bcrypt=require("bcrypt")
 getRouter.get('/getallev', async (req, res) => {
     try {
         const ev = await Ev.find();
@@ -37,8 +38,8 @@ postRouter.post('/addev', async (req, res) => {
             return res.status(400).json(error.details)
         }
         else{
-            const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity}=req.body;
-            const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity});
+            const {Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity,createdby}=req.body;
+            const newEv = await Ev.create({Name,Price,model,bodytype,range,chargingtime,safetyfeatures,batterycapacity,createdby});
             res.status(201).json(newEv);
         }
     } catch(err) {
@@ -93,6 +94,29 @@ deleteRouter.delete('/deleteuser/:id', async (req, res) => {
         return res.status(500).send({
             message: "Internal server error"
         });
+    }
+});
+
+postRouter.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    console.log("user", username, password)
+
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+        const isPasswordValid =  bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+        const token = jwt.sign({ username: user.username }, process.env.access_taken);
+        res.cookie('token', token, { httpOnly: true });
+        console.log("token", token, user.username)
+        res.json({ token, username: user.username });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Something went wrong' });
     }
 });
 
